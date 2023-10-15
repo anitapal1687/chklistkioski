@@ -11,7 +11,7 @@
 	<groupId>com.cs</groupId>
 	<artifactId>ChklistKioski</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>ChklistKioski</name>
 	<description>Checklist Kioski</description>
 	<properties>
