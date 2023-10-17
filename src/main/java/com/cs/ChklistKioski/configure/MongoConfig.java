@@ -51,6 +51,6 @@ public class MongoConfig {
 
 	    @Bean
 	    public MongoTemplate mongoTemplate(MongoClient mongoClient) {
-	        return new MongoTemplate(mongoClient,"Project");
+	        return new MongoTemplate(mongoClient,"Deals");
 	    }
 }
