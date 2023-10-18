@@ -1,5 +1,6 @@
 package com.cs.ChklistKioski.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -49,7 +50,7 @@ public class DealConfigurationController {
 	      
 		   DealConfiguration dealConf= service.findAppId(appId, versionId);
 	       
-	       return new ResponseEntity<>(dealConf, HttpStatus.OK);
+	       return new ResponseEntity<>(dealConf.getDealConfJson(), HttpStatus.OK);
 	   }
 	   
 	   
@@ -63,7 +64,26 @@ public class DealConfigurationController {
 	     dealConfList= dealConfList.stream().collect(Collectors.groupingBy(p -> p.getAppId())).values().stream()
 	     .map(plans -> plans.stream().findFirst().get())
 	     .collect(Collectors.toList());
-	       return new ResponseEntity<>(dealConfList, HttpStatus.OK);
+	     List<Document> dealList= new ArrayList<>();
+	     for(DealConfiguration deal: dealConfList) {
+	    	 dealList.add(deal.getDealConfJson());
+	     }
+	    
+	       return new ResponseEntity<>(dealList, HttpStatus.OK);
+	   }
+	   
+	   
+	   @GetMapping("/getAnyDealConfigure")
+	   ResponseEntity<?> getAnyDealConfigure( @RequestParam  String key ,  @RequestParam  String value) {
+
+	      
+		   List<DealConfiguration> dealConfList= dealConfRepo.findAll();
+		  
+		  
+		     dealConfList= dealConfList.stream().filter(p->(p.dealConfJson.toJson().contains(key) && p.dealConfJson.toJson().contains(value) ) ).toList();
+		   
+	    
+	       return new ResponseEntity<>(dealConfList.get(0).getDealConfJson(), HttpStatus.OK);
 	   }
 
 }

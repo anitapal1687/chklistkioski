@@ -1,5 +1,7 @@
 package com.cs.ChklistKioski.controller;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +50,20 @@ public class DealRequestController {
 		 DealRequest dealRequest= dealService.findDealId(dealId);
 
 	       
-	       return new ResponseEntity<>(dealRequest, HttpStatus.OK);
+	       return new ResponseEntity<>(dealRequest.getDealReq(), HttpStatus.OK);
 	   }
 	 
-		/*
-		 * @GetMapping("/getDealRequestyAnyParam") ResponseEntity<?>
-		 * getDealAnyParam(@RequestParam String param, @RequestParam String value) {
-		 * 
-		 * DealRequest dealRequest= dealService.findByAnyParam(param, value);
-		 * 
-		 * 
-		 * return new ResponseEntity<>(dealRequest, HttpStatus.OK); }
-		 */
+	   @GetMapping("/getAnyDealRequest")
+	   ResponseEntity<?> getAnyDealRequest( @RequestParam  String key ,  @RequestParam  String value) {
+
+	      
+		   List<DealRequest> dealConfList= dealRequestRepo.findAll();
+		  
+		  
+		     dealConfList= dealConfList.stream().filter(p->(p.getDealReq().toJson().contains(key) && p.getDealReq().toJson().contains(value) ) ).toList();
+		   
+	    
+	       return new ResponseEntity<>(dealConfList.get(0).getDealReq(), HttpStatus.OK);
+	   }
+
 }
