@@ -80,7 +80,7 @@ public class DealConfigurationController {
 		   List<DealConfiguration> dealConfList= dealConfRepo.findAll();
 		  
 		  
-		     dealConfList= dealConfList.stream().filter(p->(p.dealConfJson.toJson().contains(key) && p.dealConfJson.toJson().contains(value) ) ).toList();
+		     dealConfList= dealConfList.stream().filter(p->(p.dealConfJson.toJson().contains(key) && p.dealConfJson.toJson().contains(value) ) ).collect(Collectors.toList());
 		   
 	    
 	       return new ResponseEntity<>(dealConfList.get(0).getDealConfJson(), HttpStatus.OK);

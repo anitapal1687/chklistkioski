@@ -1,6 +1,7 @@
 package com.cs.ChklistKioski.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.json.JSONObject;
@@ -60,7 +61,7 @@ public class DealRequestController {
 		   List<DealRequest> dealConfList= dealRequestRepo.findAll();
 		  
 		  
-		     dealConfList= dealConfList.stream().filter(p->(p.getDealReq().toJson().contains(key) && p.getDealReq().toJson().contains(value) ) ).toList();
+		     dealConfList= dealConfList.stream().filter(p->(p.getDealReq().toJson().contains(key) && p.getDealReq().toJson().contains(value) ) ).collect(Collectors.toList());
 		   
 	    
 	       return new ResponseEntity<>(dealConfList.get(0).getDealReq(), HttpStatus.OK);
